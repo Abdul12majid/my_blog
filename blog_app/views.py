@@ -21,3 +21,12 @@ def index(request):
 	'third_most_liked_post':third_most_liked_post
 	}
 	return render(request, 'index.html', context)
+
+
+
+def health(request):
+	health_blog = Post.objects.filter(categories=health_category).all().order_by('-created_at')
+	context = {
+		'health_blog':health_blog,
+	}
+	return render(request, 'health.html', context)
