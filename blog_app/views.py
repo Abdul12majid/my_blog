@@ -3,19 +3,21 @@ from .models import Post, Category
 
 # Create your views here.
 
-world_category = Category.objects.get(id=3)
 health_category = Category.objects.get(id=5)
 tech_category = Category.objects.get(id=1)
 
 def index(request):
-	the_blog = Post.objects.order_by('-likes').first()
-	get_tech_blog = Post.objects.filter(categories=tech_category).all()
-	most_liked_tech = get_tech_blog.order_by('-likes').first()
+	most_liked_post = Post.objects.order_by('-likes').first()
 
+	# Get the second and third most liked posts
+	top_three_posts = Post.objects.order_by('-likes')[:3]
 
+	second_most_liked_post = top_three_posts[1] if len(top_three_posts) > 1 else None
+	third_most_liked_post = top_three_posts[2] if len(top_three_posts) > 2 else None
 
 	context = {
-	'the_blog':the_blog,
-	'most_liked_tech':most_liked_tech,
+	'most_liked_post':most_liked_post,
+	'second_most_liked_post':second_most_liked_post,
+	'third_most_liked_post':third_most_liked_post
 	}
 	return render(request, 'index.html', context)
