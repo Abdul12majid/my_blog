@@ -26,7 +26,9 @@ def index(request):
 
 def health(request):
 	health_blog = Post.objects.filter(categories=health_category).all().order_by('-created_at')
+	most_liked_post = Post.objects.filter(categories=health_category).all().order_by('-likes').first()
 	context = {
 		'health_blog':health_blog,
+		'most_liked_post':most_liked_post
 	}
-	return render(request, 'health.html', context)
+	return render(request, 'pages/health.html', context)
