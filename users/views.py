@@ -1,8 +1,9 @@
 from django.shortcuts import render, HttpResponse
+from django.contrib.auth.models import User
 
 # Create your views here.
 
-def index(request):
+def signin(request):
 	if request.method == "POST":
 		username = request.POST['username']
 		password = request.POST['password1']
@@ -27,15 +28,17 @@ def signup(request):
 		password1 = request.POST.get('password1')
 		password2 = request.POST.get('password2')
 
-		if password1 != password2:
-			print('Password mismatch')	
 		if User.objects.filter(username=username).exists():
-			print('username exists')	
+			print('username exists')
+		if User.objects.filter(email=email).exists():
+			print('email exists')
+		if password1 != password2:
+			print('Password mismatch')
 			
-		user = User.objects.create_user(username=username, password=password2)
+		user = User.objects.create_user(username=username, password=password2, email=email)
 		user.save()
 		get_user = authenticate(username=username, password=password2)
 		login(request, get_user)
-		return redirect('index')
+		return redirect('signup')
 
-	return render(request, 'register.html')
+	return render(request, 'signup.html')
