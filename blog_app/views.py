@@ -32,3 +32,13 @@ def health(request):
 		'most_liked_post':most_liked_post
 	}
 	return render(request, 'pages/health.html', context)
+
+
+def tech(request):
+	tech_blog = Post.objects.filter(categories=tech_category).all().order_by('-created_at')
+	most_liked_post = Post.objects.filter(categories=tech_category).all().order_by('-likes').first()
+	context = {
+		'tech_blog':tech_blog,
+		'most_liked_post':most_liked_post
+	}
+	return render(request, 'pages/tech.html', context)
