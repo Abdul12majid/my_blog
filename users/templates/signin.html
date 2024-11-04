@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load django_htmx %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -35,21 +36,30 @@
     
     <!-- Custom styles for this template -->
     <link href="{% static 'css/signin.css' %}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://unpkg.com/htmx.org@2.0.2"></script>
+    {% django_htmx_script %}
+    <script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
   </head>
   <body class="text-center">
     
 <main class="form-signin">
-  <form>
+  <form method="POST">
+    {% csrf_token %}
     <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
     <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-      <label for="floatingInput">Email address</label>
-    </div>
+      <input name="username" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" hx-post="{% url 'check_username' %}" hx-target="#check_username" hx-swap=innerhtml hx-trigger="keyup throttle: 3s"/>
+      <label for="floatingInput">Username</label>
+      <p id="check_username"></p>
+    </div></br>
     <div class="form-floating">
       <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
       <label for="floatingPassword">Password</label>
+      <p>xxxxxxxx</p>
     </div>
 
     <div class="checkbox mb-3">
