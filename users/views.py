@@ -13,15 +13,13 @@ def signup(request):
 		password1 = request.POST.get('password1')
 		password2 = request.POST.get('password2')
 		if password1 == password2:
-			if User.objects.filter(username=username).exists():
-				return HttpResponse("<p class='success'><b></b></p>")
-			else:
-				user = User.objects.create_user(username=username, password=password2)
-				user.save()
-				get_user = authenticate(username=username, password=password2)
-				login(request, get_user)
-				return redirect('index')
-		else:
-			print('Password mismatch')
-			return redirect('register')
+			print('Password mismatch')	
+		if User.objects.filter(username=username).exists():
+			print('username exists')	
+			
+		user = User.objects.create_user(username=username, password=password2)
+		user.save()
+		get_user = authenticate(username=username, password=password2)
+		login(request, get_user)
+		return redirect('index')
 	return render(request, 'register.html')
