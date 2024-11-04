@@ -3,9 +3,11 @@ from .models import Post, Category
 
 # Create your views here.
 
-health_category = Category.objects.get(id=5)
 tech_category = Category.objects.get(id=1)
 business_category = Category.objects.get(id=2)
+random_category = Category.objects.get(id=3)
+health_category = Category.objects.get(id=5)
+
 
 def index(request):
 	most_liked_post = Post.objects.order_by('-likes').first()
@@ -52,3 +54,13 @@ def business(request):
 		'most_liked_post':most_liked_post
 	}
 	return render(request, 'pages/business.html', context)
+
+
+def random(request):
+	random_blog = Post.objects.filter(categories=random_category).all().order_by('-created_at')
+	most_liked_post = Post.objects.filter(categories=random_category).all().order_by('-likes').first()
+	context = {
+		'random_blog':random_blog,
+		'most_liked_post':most_liked_post
+	}
+	return render(request, 'pages/random.html', context)
