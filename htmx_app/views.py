@@ -8,6 +8,8 @@ def index(request):
 
 def check_username(request):
 	username = request.POST.get('username')
+	if len(username) < 4:
+		return HttpResponse("Username too short")
 	if User.objects.filter(username=username).exists():
 		return HttpResponse("Username taken")
 	else:
@@ -20,3 +22,20 @@ def check_email(request):
 		return HttpResponse("email exists")
 	else:
 		return HttpResponse("email available")
+
+
+def check_password1(request):
+	password = request.POST.get('password1')
+	if len(password) < 8:
+		return HttpResponse("password too short")
+	else:
+		return HttpResponse("")
+
+
+def check_password2(request):
+	password = request.POST.get('password1')
+	password2 = request.POST.get('password2')
+	if password2 != password:
+		return HttpResponse("password does not match")
+	else:
+		return HttpResponse("")
