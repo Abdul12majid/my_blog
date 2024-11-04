@@ -21,8 +21,12 @@ class Post(models.Model):
 	created_at = models.DateTimeField(auto_now_add=True)
 	updated_at = models.DateTimeField(auto_now=True)
 	likes = models.IntegerField(default=0)
-	categories = models.ManyToManyField(Category, related_name='posts')
+	categories = models.ForeignKey(Category, on_delete=models.CASCADE)
 	is_published = models.BooleanField(default=True)
+
+	def short_content(self):
+		words = self.content.split()[:5]
+		return ' '.join(words) + '...' if len(words) == 5 else ' '.join(words)
 
 	def __str__(self):
 		return self.title
