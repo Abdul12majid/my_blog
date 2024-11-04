@@ -4,3 +4,7 @@ from django.shortcuts import render, HttpResponse
 
 def index(request):
 	return render(request, "signin.html")
+
+
+def signup(request):
+	return render(request, 'signup.html')
