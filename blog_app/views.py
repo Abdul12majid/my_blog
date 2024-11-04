@@ -5,6 +5,7 @@ from .models import Post, Category
 
 health_category = Category.objects.get(id=5)
 tech_category = Category.objects.get(id=1)
+business_category = Category.objects.get(id=2)
 
 def index(request):
 	most_liked_post = Post.objects.order_by('-likes').first()
@@ -42,3 +43,12 @@ def tech(request):
 		'most_liked_post':most_liked_post
 	}
 	return render(request, 'pages/tech.html', context)
+
+def business(request):
+	business_blog = Post.objects.filter(categories=business_category).all().order_by('-created_at')
+	most_liked_post = Post.objects.filter(categories=business_category).all().order_by('-likes').first()
+	context = {
+		'business_blog':business_blog,
+		'most_liked_post':most_liked_post
+	}
+	return render(request, 'pages/business.html', context)
