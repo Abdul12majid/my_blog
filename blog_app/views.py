@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from .models import Post, Category
 from django.contrib import messages
 
@@ -65,3 +65,11 @@ def random(request):
 		'most_liked_post':most_liked_post
 	}
 	return render(request, 'pages/random.html', context)
+
+
+def post_detail(request, slug):
+    post = get_object_or_404(Post, slug=slug)
+    context = {
+    	'post': post,
+    }
+    return render(request, 'pages/post_detail.html', context)
