@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from .models import Post, Category
 from django.contrib import messages
 
@@ -69,8 +69,12 @@ def random(request):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
+    user_profile = request.user.profile
+    liked_post = user_profile.liked_post.all()
     context = {
     	'post': post,
+    	'user_profile': user_profile,
+    	"liked_post": liked_post,
     }
     return render(request, 'pages/post_detail.html', context)
 
@@ -78,8 +82,16 @@ def post_detail(request, slug):
 def like_blog(request, pk):
 	post = get_object_or_404(Post, id=pk)
 	user_profile = request.user.profile
-	user_profile.liked_post.add(post)
-	user_profile.save()
-	post.likes += 1
-	post.save()
+	if post in user_profile.liked_post.all():
+		user_profile.liked_post.remove(post)
+		user_profile.save()
+		post.likes -= 1
+		post.save()
+		return redirect(request.META.get("HTTP_REFERER"))
+	else:
+		user_profile.liked_post.add(post)
+		user_profile.save()
+		post.likes += 1
+		post.save()
+		return redirect(request.META.get("HTTP_REFERER"))
 	return redirect(request.META.get("HTTP_REFERER"))
