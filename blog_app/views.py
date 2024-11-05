@@ -73,3 +73,13 @@ def post_detail(request, slug):
     	'post': post,
     }
     return render(request, 'pages/post_detail.html', context)
+
+
+def like_blog(request, pk):
+	post = get_object_or_404(Post, id=pk)
+	user_profile = request.user.profile
+	user_profile.liked_post.add(post)
+	user_profile.save()
+	post.likes += 1
+	post.save()
+	return redirect(request.META.get("HTTP_REFERER"))
