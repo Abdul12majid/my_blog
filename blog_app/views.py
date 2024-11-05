@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from .models import Post, Category
+from django.contrib import messages
 
 # Create your views here.
 

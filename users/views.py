@@ -1,12 +1,14 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
 def signin(request):
 	if request.method == "POST":
 		username = request.POST['username']
-		password = request.POST['password1']
+		password = request.POST['password']
 		user = User.objects.filter(username=username).exists()
 		if user is True:
 			get_user = User.objects.get(username=username)
@@ -14,10 +16,12 @@ def signin(request):
 			auth_user = authenticate(request, username=user_username, password=password)
 			if auth_user is not None:
 				login(request, get_user)
+				print('login Successful')
+				messages.success(request, 'Login Successful')
 				return redirect('index')
-			return render(request, 'login.html')
-		return redirect('register')
-	return render(request, 'login.html')
+			return render(request, 'signup.html')
+		return redirect('signup')
+	return render(request, 'signin.html')
 
 
 def signup(request):

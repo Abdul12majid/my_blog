@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse
 from django.contrib.auth.models import User
 
 # Create your views here.
-def index(request):
+def home(request):
 	return HttpResponse("htmx")
 
 
