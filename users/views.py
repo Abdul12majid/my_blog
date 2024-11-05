@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 # Create your views here.
 
 def signin(request):
+
 	if request.method == "POST":
 		username = request.POST['username']
 		password = request.POST['password']
@@ -19,7 +20,9 @@ def signin(request):
 				print('login Successful')
 				messages.success(request, 'Login Successful')
 				return redirect('index')
-			return render(request, 'signup.html')
+
+			messages.success(request, 'Invalid username or password')
+			return render(request, 'signin.html')
 		return redirect('signup')
 	return render(request, 'signin.html')
 
