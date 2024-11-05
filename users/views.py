@@ -37,15 +37,23 @@ def signup(request):
 
 		if User.objects.filter(username=username).exists():
 			print('username exists')
+			messages.success(request, 'Username exists, pick another.')
+			return redirect('signup')
 		if User.objects.filter(email=email).exists():
 			print('email exists')
+			messages.success(request, 'Email exists, pick another.')
+			return redirect('signup')
 		if password1 != password2:
 			print('Password mismatch')
+			messages.success(request, "Password doesn't match.")
+			return redirect('signup')
 			
 		user = User.objects.create_user(username=username, password=password2, email=email)
 		user.save()
 		get_user = authenticate(username=username, password=password2)
 		login(request, get_user)
-		return redirect('signup')
+		get_user = request.user
+		messages.success(request, f"Welcome {get_user.username}, registration Successful.")
+		return redirect('index')
 
 	return render(request, 'signup.html')

@@ -31,6 +31,12 @@
           font-size: 3.5rem;
         }
       }
+      .success{
+        color: green;
+      }
+      .error{
+        color: red;
+      }
     </style>
 
     
@@ -49,28 +55,29 @@
   <form method="POST" action="{% url 'signup' %}" validate>
     {% csrf_token %}
     <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+    {% include "messages.html" %}
     <h1 class="h3 mb-3 fw-normal">Sign up</h1>
 
     <div class="form-floating">
-      <input name="username" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" hx-post="{% url 'check_username' %}" hx-target="#check_username" hx-swap=innerhtml hx-trigger="keyup throttle: 2s"/>
+      <input name="username" type="text" class="form-control" id="floatingInput" placeholder="name@example.com" hx-post="{% url 'check_username' %}" hx-target="#check_username" hx-swap=outerhtml hx-trigger="keyup throttle: 2s"/>
       <label for="floatingInput">Username</label>
       <p id="check_username"></p>
     </div></br>
 
     <div class="form-floating">
-      <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" hx-post="{% url 'check_email' %}" hx-target="#check_email" hx-swap=innerhtml hx-trigger="keyup throttle: 3s"/>
+      <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com" hx-post="{% url 'check_email' %}" hx-target="#check_email" hx-swap=outerhtml hx-trigger="keyup throttle: 3s"/>
       <label for="floatingInput">Email</label>
       <p id="check_email"></p>
     </div></br>
 
     <div class="form-floating">
-      <input name="password1" type="password" class="form-control" id="floatingPassword" placeholder="Password" hx-post="{% url 'check_password1' %}" hx-target="#check_password1" hx-swap=innerhtml hx-trigger="keyup throttle: 3s"/>
+      <input name="password1" type="password" class="form-control" id="floatingPassword" placeholder="Password" hx-post="{% url 'check_password1' %}" hx-target="#check_password1" hx-swap=outerhtml hx-trigger="keyup throttle: 3s"/>
       <label for="floatingPassword">Password</label>
       <p id="check_password1"></p>
     </div>
 
     <div class="form-floating">
-      <input name="password2" type="password" class="form-control" id="floatingPassword" placeholder="Password" hx-post="{% url 'check_password2' %}" hx-target="#check_password2" hx-swap=innerhtml hx-trigger="keyup throttle: 3s"/>
+      <input name="password2" type="password" class="form-control" id="floatingPassword" placeholder="Password" hx-post="{% url 'check_password2' %}" hx-target="#check_password2" hx-swap=outerhtml hx-trigger="keyup throttle: 3s"/>
       <label for="floatingPassword">Confirm Password</label>
       <p id="check_password2"></p>
     </div>
