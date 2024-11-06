@@ -43,8 +43,9 @@ def check_password2(request):
 
 def like_count2(request, pk):
     post = get_object_or_404(Post, id=pk)
+    print("jjj")
     user_profile = request.user.profile
-
+    count = post.likes
     if request.htmx:
         if post in user_profile.liked_post.all():
             user_profile.liked_post.remove(post)
@@ -60,7 +61,7 @@ def like_count2(request, pk):
         context = {
             'post': post,
             'liked_post': liked_post,
-            'count': post.likes,
+            'count': count,
         }
         return render(request, 'like_count.html', context)
 
