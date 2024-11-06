@@ -68,9 +68,11 @@ def logout_user(request):
 def profile(request, username):
 	user = get_object_or_404(User, username=username)
 	get_user = request.user
+	get_user_profile = get_user.profile.follows.all()
 	context = {
 		'user':user,
 		'get_user':get_user,
+		'get_user_profile':get_user_profile,
 	}
 	return render(request, 'profile.html', context)
 

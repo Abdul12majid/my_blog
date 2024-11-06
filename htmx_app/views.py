@@ -80,5 +80,13 @@ def like_count2(request, pk):
 
 def follow(request, pk):
 	get_profile = get_object_or_404(User, id=pk)
+	follow_profile = get_profile.profile
 	user_profile = request.user.profile
-	return HttpResponse("Invalid request")
+	if follow_profile in user_profile:
+		user_profile.follows.remove(follow_profile)
+		user_profile.save()
+	else:
+		user_profile.follows.add(follow_profile)
+		user_profile.save()
+	return redirect(request.META.get("HTTP_REFERER"))
+

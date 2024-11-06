@@ -14,10 +14,17 @@
       Edit Profile
     </button>
   {% else %}
-    <button type="button" class="btn btn-sm btn-outline-secondary">
+    {% if user.profile in get_user_profile %}
+    <a href="{% url 'follow' user.id %}" type="button" class="btn btn-sm btn-outline-secondary">
       <span data-feather="calendar"></span>
-      Follow
-    </button>
+        Unfollow
+    </a>
+      {% else %}
+      <a href="{% url 'follow' user.id %}" type="button" class="btn btn-sm btn-outline-secondary">
+      <span data-feather="calendar"></span>
+        Follow   
+      </a>
+    {% endif %}
   {% endif %}
 
 {% endblock %}
