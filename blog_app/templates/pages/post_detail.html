@@ -2,24 +2,47 @@
 
 {% block title %}
 
-HEALTH
+MY BLOG
 
 {% endblock %}
 
 {% block top_blog %}
 
-<h1 class="display-4 fst-italic">{{ most_liked_post.title }}</h1>
-      <p class="lead my-3">{{ most_liked_post.short_content }}</p>
-      <p class="lead mb-0"><a href="#" class="text-white fw-bold">Continue reading</a></p>
+<h1 class="display-4 fst-italic">{{ post.title }}</h1>
+      <p class="lead my-3">{{ post.short_content }} by</p>
+      <p class="lead mb-0" class="text-white fw-bold">{{ post.author.first_name}} {{ post.author.last_name}}</p>
 
 {% endblock %}
 
 
 {% block content %}
 
+<div class="row g-5">
+    <div class="col-md-8">
+      <h3 class="pb-4 mb-4 fst-italic border-bottom">
+        From the Firehose
+      </h3>
+
+      <article class="blog-post">
+        <h2 class="blog-post-title">Sample blog post</h2>
+        <p class="blog-post-meta">{{ post.created_at }}<a href="#"> {{ post.author.username }}</a></p>
+        <hr></br>
+        <p>{{ post.content }}</p></br>
+        <hr></br>
+
+        <div id="like_id">
+        {% if post in liked_post  %}
+        <i hx-post="{% url 'like_count2' post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa-solid fa-heart" style="color:darkgrey;"></i><b>{{ post.likes }}</b>
+        {% else %}
+        <i hx-post="{% url 'like_count2' post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-heart-o" style="color:darkgrey;"></i><b>{{ post.likes }}</b>
+        {% endif %}
+        </div>
+
+      </article>
+    </div>
 
 <div class="row mb-2">
-	{% for post in health_blog %}
+  {% for post in similar_post %}
     <div class="col-md-6">
       <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
@@ -38,5 +61,6 @@ HEALTH
     {% endfor %}
 </div>
 
+<!-- hx-trigger=onclick -->
 
 {% endblock %}

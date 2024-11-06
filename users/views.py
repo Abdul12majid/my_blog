@@ -63,3 +63,7 @@ def logout_user(request):
 	logout(request)
 	messages.success(request, "You've been logged out")
 	return redirect('index')
+
+
+def profile(request):
+	return render(request, 'profile.html')
