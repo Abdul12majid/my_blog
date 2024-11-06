@@ -59,13 +59,22 @@
         <p>{{ most_liked_post.content }}.</p></br>
         <hr></br>
 
-        <div id="like_id">
-        {% if most_liked_post in liked_post  %}
-        <i hx-post="{% url 'like_count2' most_liked_post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa-solid fa-heart" style="color:darkgrey;"></i><b>{{ most_liked_post.likes }}</b>
+        {% if user.is_authenticated %}
+            <div id="like_id">
+            {% if most_liked_post in liked_post  %}
+                <i hx-post="{% url 'like_count2' most_liked_post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa-solid fa-heart" style="color:darkgrey;"></i><b>{{ most_liked_post.likes }}</b>
+            {% else %}
+                <i hx-post="{% url 'like_count2' most_liked_post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-heart-o" style="color:darkgrey;"></i><b>{{ most_liked_post.likes }}</b>
+            {% endif %}
+            </div>
+
         {% else %}
-        <i hx-post="{% url 'like_count2' most_liked_post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-heart-o" style="color:darkgrey;"></i><b>{{ most_liked_post.likes }}</b>
+            <div id="like_id">
+        
+            <b>{{ most_liked_post.likes }} Likes</b>
+        
         {% endif %}
-        </div>
+            </div>
         
       </article>
 
