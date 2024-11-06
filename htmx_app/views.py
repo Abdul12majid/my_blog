@@ -1,5 +1,6 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.contrib.auth.models import User
+from blog_app.models import Post
 
 # Create your views here.
 def home(request):
@@ -43,7 +44,6 @@ def check_password2(request):
 
 def like_count2(request, pk):
     post = get_object_or_404(Post, id=pk)
-    print("jjj")
     user_profile = request.user.profile
     count = post.likes
     if request.htmx:
