@@ -67,3 +67,19 @@ def logout_user(request):
 
 def profile(request):
 	return render(request, 'profile.html')
+
+
+def my_blogs(request):
+	return render(request, 'my_blogs.html')
+
+
+def saved_blogs(request):
+	return render(request, 'saved_blogs.html')
+
+
+def following(request):
+	return render(request, 'following.html')
+
+
+def followers(request):
+	return render(request, 'followers.html')
