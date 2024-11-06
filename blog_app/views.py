@@ -82,6 +82,8 @@ def post_detail(request, slug):
 def like_blog(request, pk):
 	post = get_object_or_404(Post, id=pk)
 	user_profile = request.user.profile
+	check_post = post in user_profile.liked_post.all()
+	print(check_post)
 	if post in user_profile.liked_post.all():
 		user_profile.liked_post.remove(post)
 		user_profile.save()

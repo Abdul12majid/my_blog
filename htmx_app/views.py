@@ -45,24 +45,32 @@ def check_password2(request):
 def like_count2(request, pk):
     post = get_object_or_404(Post, id=pk)
     user_profile = request.user.profile
-    count = post.likes
+    
     if request.htmx:
         if post in user_profile.liked_post.all():
             user_profile.liked_post.remove(post)
             post.likes -= 1
-        else:
-            user_profile.liked_post.add(post)
-            post.likes += 1
-        
-        user_profile.save()
-        post.save()
-
-        liked_post = user_profile.liked_post.all()
-        context = {
+            count = post.likes
+            user_profile.save()
+            post.save()	
+            liked_post = user_profile.liked_post.all()
+            context = {
             'post': post,
             'liked_post': liked_post,
             'count': count,
-        }
-        return render(request, 'like_count.html', context)
-
+	        }
+            return render(request, 'like_count.html', context)
+        else:
+        	user_profile.liked_post.add(post)
+        	post.likes += 1
+        	count = post.likes
+        	user_profile.save()
+        	post.save()
+        	liked_post = user_profile.liked_post.all()
+        	context = {
+        	    'post': post,
+	            'liked_post': liked_post,
+	            'count': count,
+	        }
+        	return render(request, 'like_count.html', context)
     return HttpResponse("Invalid request")
