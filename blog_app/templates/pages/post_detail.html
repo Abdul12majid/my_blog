@@ -25,7 +25,7 @@ MY BLOG
 
       <article class="blog-post">
         <h2 class="blog-post-title">Sample blog post</h2>
-        <p class="blog-post-meta">{{ post.created_at }}<a href="#"> {{ post.author.username }}</a></p>
+        <p class="blog-post-meta">{{ post.created_at }}<a href="{% url 'profile' post.author.username %}"> {{ post.author.username }}</a></p>
         <hr></br>
         <p>{{ post.content }}</p></br>
         <hr></br>
