@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from blog_app.models import Post
 
@@ -79,14 +79,30 @@ def like_count2(request, pk):
 
 
 def follow(request, pk):
-	get_profile = get_object_or_404(User, id=pk)
-	follow_profile = get_profile.profile
-	user_profile = request.user.profile
-	if follow_profile in user_profile:
-		user_profile.follows.remove(follow_profile)
-		user_profile.save()
-	else:
-		user_profile.follows.add(follow_profile)
-		user_profile.save()
-	return redirect(request.META.get("HTTP_REFERER"))
+	if request.htmx:
+		get_profile = get_object_or_404(User, id=pk)
+		follow_profile = get_profile.profile
+		user_profile = request.user.profile
+		my_follows = user_profile.follows.all()
+		if follow_profile in my_follows:
+			user_profile.follows.remove(follow_profile)
+			user_profile.save()
+			context = {
+				'get_profile':get_profile,
+				'user_profile':user_profile,
+				'follow_profile':follow_profile,
+				'my_follows':my_follows,
+			}
+			return render(request, 'follow_un.html', context)
+		else:
+			user_profile.follows.add(follow_profile)
+			user_profile.save()
+			context = {
+				'get_profile':get_profile,
+				'user_profile':user_profile,
+				'follow_profile':follow_profile,
+				'my_follows':my_follows,
+			}
+			return render(request, 'follow_un.html', context)
+	return HttpResponse("Invalid request")
 

@@ -14,17 +14,20 @@
       Edit Profile
     </button>
   {% else %}
+
+    <div class="container" id="follow_un">
     {% if user.profile in get_user_profile %}
-    <a href="{% url 'follow' user.id %}" type="button" class="btn btn-sm btn-outline-secondary">
-      <span data-feather="calendar"></span>
-        Unfollow
-    </a>
-      {% else %}
-      <a href="{% url 'follow' user.id %}" type="button" class="btn btn-sm btn-outline-secondary">
+      <button hx-post="{% url 'follow' user.id %}" hx-target="#follow_un" hx-swap="innerhtml" type="button" class="btn btn-sm btn-outline-secondary">
+        <span data-feather="calendar"></span>
+          Unfollow
+      </button>
+    {% else %}
+      <button hx-post="{% url 'follow' user.id %}" hx-target="#follow_un" hx-swap="innerhtml" type="button" class="btn btn-sm btn-outline-secondary">
       <span data-feather="calendar"></span>
         Follow   
-      </a>
+      </button>
     {% endif %}
+    </div>
   {% endif %}
 
 {% endblock %}
