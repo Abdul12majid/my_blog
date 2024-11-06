@@ -85,12 +85,15 @@ def random(request):
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
+    post_category = post.categories
+    similar_post = Post.objects.filter(categories=post_category).all().exclude(id=post.id)
     user_profile = request.user.profile
     liked_post = user_profile.liked_post.all()
     context = {
     	'post': post,
     	'user_profile': user_profile,
     	"liked_post": liked_post,
+    	'similar_post':similar_post,
     }
     return render(request, 'pages/post_detail.html', context)
 
