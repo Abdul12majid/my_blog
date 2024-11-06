@@ -13,6 +13,7 @@ class Profile(models.Model):
     profile_bio=models.TextField(null=True, blank=True, max_length=500)
     liked_post = models.ManyToManyField(Post, symmetrical=False, blank=True)
     post_count = models.IntegerField(default=0)
+    follows=models.ManyToManyField('self', related_name='followed_by', symmetrical=False, blank=True)
 
     def __str__(self):
         return self.user.username

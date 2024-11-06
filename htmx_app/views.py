@@ -76,3 +76,9 @@ def like_count2(request, pk):
 	        }
         	return render(request, 'like_count.html', context)
     return HttpResponse("Invalid request")
+
+
+def follow(request, pk):
+	get_profile = get_object_or_404(User, id=pk)
+	user_profile = request.user.profile
+	return HttpResponse("Invalid request")
