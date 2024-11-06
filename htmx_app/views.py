@@ -39,3 +39,29 @@ def check_password2(request):
 		return HttpResponse("<p class='error'>Password does not match</p>")
 	else:
 		return HttpResponse("")
+
+
+def like_count2(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    user_profile = request.user.profile
+
+    if request.htmx:
+        if post in user_profile.liked_post.all():
+            user_profile.liked_post.remove(post)
+            post.likes -= 1
+        else:
+            user_profile.liked_post.add(post)
+            post.likes += 1
+        
+        user_profile.save()
+        post.save()
+
+        liked_post = user_profile.liked_post.all()
+        context = {
+            'post': post,
+            'liked_post': liked_post,
+            'count': post.likes,
+        }
+        return render(request, 'like_count.html', context)
+
+    return HttpResponse("Invalid request")
