@@ -19,6 +19,8 @@ def check_username(request):
 
 def check_email(request):
 	email = request.POST.get('email')
+	if '@' not in email:
+		return HttpResponse("<p class='error'>Invalid email</p>")
 	if User.objects.filter(email=email).exists():
 		return HttpResponse("<p class='error'>Email exixts</p>")
 	else:

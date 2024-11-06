@@ -12,7 +12,6 @@ health_category = Category.objects.get(id=5)
 
 def index(request):
 	most_liked_post = Post.objects.order_by('-likes').first()
-	post = most_liked_post.id
 	user_profile = request.user.profile
 	liked_post = user_profile.liked_post.all()
 
@@ -23,11 +22,10 @@ def index(request):
 	third_most_liked_post = top_three_posts[2] if len(top_three_posts) > 2 else None
 
 	context = {
-	'most_liked_post':most_liked_post,
-	'second_most_liked_post':second_most_liked_post,
-	'third_most_liked_post':third_most_liked_post,
-	'post':post,
-	'liked_post':liked_post,
+		'most_liked_post':most_liked_post,
+		'second_most_liked_post':second_most_liked_post,
+		'third_most_liked_post':third_most_liked_post,
+		'liked_post':liked_post,
 	}
 	return render(request, 'index.html', context)
 

@@ -60,8 +60,8 @@
         <hr></br>
 
         <div id="like_id">
-        {% if post in liked_post  %}
-        <i hx-post="{% url 'like_count2' most_liked_post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa-solid fa-heart" style="color:darkgrey;"></i><b>{{ most_liked_post.post.likes }}</b>
+        {% if most_liked_post in liked_post  %}
+        <i hx-post="{% url 'like_count2' most_liked_post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa-solid fa-heart" style="color:darkgrey;"></i><b>{{ most_liked_post.likes }}</b>
         {% else %}
         <i hx-post="{% url 'like_count2' most_liked_post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-heart-o" style="color:darkgrey;"></i><b>{{ most_liked_post.likes }}</b>
         {% endif %}
