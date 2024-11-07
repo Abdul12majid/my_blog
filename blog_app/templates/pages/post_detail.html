@@ -38,9 +38,9 @@ MY BLOG
         {% endif %}
 
         {% if post in saved_post %}
-        &nbsp; &nbsp; <i hx-post="{% url 'bookmark' post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-bookmark" style="color:grey;"></i>
+        &nbsp; &nbsp; <i hx-post="{% url 'bookmark' post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-bookmark" style="color:grey;"></i>&nbsp;<b>{{ post.bookmarks }}</b>
         {% else %}
-        &nbsp; &nbsp; <i hx-post="{% url 'bookmark' post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-bookmark-o" style="color:grey;"></i>
+        &nbsp; &nbsp; <i hx-post="{% url 'bookmark' post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-bookmark-o" style="color:grey;"></i>&nbsp;<b>{{ post.bookmarks }}</b>
         {% endif %}
         </div>
         

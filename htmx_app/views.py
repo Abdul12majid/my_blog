@@ -119,14 +119,14 @@ def bookmark(request, pk):
     if request.htmx:
         if post in user_profile.bookmarked.all():
             user_profile.bookmarked.remove(post)
-            post.bookmark_count -= 1
+            post.bookmarks -= 1
             messages.error(request, "Post removed from bookmarks")
             user_profile.save()
             post.save()	
             liked_post = user_profile.liked_post.all()
             saved_post = user_profile.bookmarked.all()
             count = post.likes
-            b_count = post.bookmark_count
+            b_count = post.bookmarks
             context = {
             'post': post,
             'saved_post': saved_post,
@@ -137,14 +137,14 @@ def bookmark(request, pk):
             return render(request, 'like_count.html', context)
         else:
         	user_profile.bookmarked.add(post)
-        	post.bookmark_count += 1
+        	post.bookmarks += 1
         	messages.success(request, "Post added to bookmarks")
         	user_profile.save()
         	post.save()
         	liked_post = user_profile.liked_post.all()
         	saved_post = user_profile.bookmarked.all()
         	count = post.likes
-        	b_count = post.bookmark_count
+        	b_count = post.bookmarks
         	context = {
         	    'post': post,
 	            'saved_post': saved_post,
