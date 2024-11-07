@@ -1,3 +1,5 @@
+{% include 'messages.html' %}
+
 {% if post in liked_post  %}
 <i hx-post="{% url 'like_count2' post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa-solid fa-heart" style="color:darkgrey;"></i><b>{{ count }}</b>
 {% else %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from blog_app.models import Post
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -118,6 +119,7 @@ def bookmark(request, pk):
     if request.htmx:
         if post in user_profile.bookmarked.all():
             user_profile.bookmarked.remove(post)
+            messages.error(request, "Post removed from bookmarks")
             user_profile.save()
             post.save()	
             liked_post = user_profile.liked_post.all()
@@ -132,6 +134,7 @@ def bookmark(request, pk):
             return render(request, 'like_count.html', context)
         else:
         	user_profile.bookmarked.add(post)
+        	messages.success(request, "Post added to bookmarks")
         	user_profile.save()
         	post.save()
         	liked_post = user_profile.liked_post.all()
