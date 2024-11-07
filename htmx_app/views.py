@@ -79,30 +79,30 @@ def like_count2(request, pk):
 
 
 def follow(request, pk):
+	user = get_object_or_404(User, id=pk)
+	get_user = request.user
+	print(user.profile in get_user.profile.follows.all())
 	if request.htmx:
-		get_profile = get_object_or_404(User, id=pk)
-		follow_profile = get_profile.profile
-		user_profile = request.user.profile
-		my_follows = user_profile.follows.all()
-		if follow_profile in my_follows:
-			user_profile.follows.remove(follow_profile)
-			user_profile.save()
-			context = {
-				'get_profile':get_profile,
-				'user_profile':user_profile,
-				'follow_profile':follow_profile,
-				'my_follows':my_follows,
-			}
-			return render(request, 'follow_un.html', context)
-		else:
-			user_profile.follows.add(follow_profile)
-			user_profile.save()
-			context = {
-				'get_profile':get_profile,
-				'user_profile':user_profile,
-				'follow_profile':follow_profile,
-				'my_follows':my_follows,
-			}
-			return render(request, 'follow_un.html', context)
+		get_user.profile.follows.remove(user.profile)
+		get_user.profile.save()
+		context = {
+			'user':user,
+			'get_user':get_user,
+		}
+		return render(request, 'follow.html', context)
 	return HttpResponse("Invalid request")
 
+
+def unfollow(request, pk):
+	user = get_object_or_404(User, id=pk)
+	get_user = request.user
+	print(user.profile in get_user.profile.follows.all())
+	if request.htmx:
+		get_user.profile.follows.add(user.profile)
+		get_user.profile.save()
+		context = {
+			'user':user,
+			'get_user':get_user,
+		}
+		return render(request, 'unfollow.html', context)
+	return HttpResponse("Invalid request")

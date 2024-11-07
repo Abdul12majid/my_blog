@@ -22,6 +22,7 @@ urlpatterns = [
     path('check_password2', views.check_password2, name="check_password2"),
     path('like-count/<uuid:pk>/', views.like_count2, name='like_count2'),
     path('follow/<str:pk>/', views.follow, name='follow'),
+    path('unfollow/<str:pk>/', views.unfollow, name='unfollow'),
     
     
 ]
