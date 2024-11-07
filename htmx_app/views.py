@@ -122,11 +122,12 @@ def bookmark(request, pk):
             post.save()	
             liked_post = user_profile.liked_post.all()
             saved_post = user_profile.bookmarked.all()
+            count = post.likes
             context = {
             'post': post,
             'saved_post': saved_post,
-            'liked_post': liked_post
-           
+            'liked_post': liked_post,
+            'count':count,
 	        }
             return render(request, 'like_count.html', context)
         else:
@@ -135,10 +136,12 @@ def bookmark(request, pk):
         	post.save()
         	liked_post = user_profile.liked_post.all()
         	saved_post = user_profile.bookmarked.all()
+        	count = post.likes
         	context = {
         	    'post': post,
 	            'saved_post': saved_post,
-	            'liked_post': liked_post
+	            'liked_post': liked_post,
+	            'count':count,
 	            
 	        }
         	return render(request, 'like_count.html', context)
