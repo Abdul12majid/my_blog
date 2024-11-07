@@ -14,7 +14,6 @@ class Profile(models.Model):
     liked_post = models.ManyToManyField(Post, symmetrical=False, blank=True)
     bookmarked = models.ManyToManyField(Post, related_name='saved_blog', symmetrical=False, blank=True)
     post_count = models.IntegerField(default=0)
-    bookmark_count = models.IntegerField(default=0)
     follows=models.ManyToManyField('self', related_name='followed_by', symmetrical=False, blank=True)
 
     def __str__(self):
