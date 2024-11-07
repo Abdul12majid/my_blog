@@ -56,9 +56,11 @@ def like_count2(request, pk):
             user_profile.save()
             post.save()	
             liked_post = user_profile.liked_post.all()
+            saved_post = user_profile.bookmarked.all()
             context = {
             'post': post,
             'liked_post': liked_post,
+            'saved_post': saved_post,
             'count': count,
 	        }
             return render(request, 'like_count.html', context)
@@ -69,9 +71,11 @@ def like_count2(request, pk):
         	user_profile.save()
         	post.save()
         	liked_post = user_profile.liked_post.all()
+        	saved_post = user_profile.bookmarked.all()
         	context = {
         	    'post': post,
 	            'liked_post': liked_post,
+	            'saved_post': saved_post,
 	            'count': count,
 	        }
         	return render(request, 'like_count.html', context)
@@ -105,3 +109,37 @@ def follow(request, pk):
 			}
 			return render(request, 'follow.html', context)
 	return HttpResponse("Invalid request")
+
+
+def bookmark(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    user_profile = request.user.profile
+    
+    if request.htmx:
+        if post in user_profile.bookmarked.all():
+            user_profile.bookmarked.remove(post)
+            user_profile.save()
+            post.save()	
+            liked_post = user_profile.liked_post.all()
+            saved_post = user_profile.bookmarked.all()
+            context = {
+            'post': post,
+            'saved_post': saved_post,
+            'liked_post': liked_post
+           
+	        }
+            return render(request, 'like_count.html', context)
+        else:
+        	user_profile.bookmarked.add(post)
+        	user_profile.save()
+        	post.save()
+        	liked_post = user_profile.liked_post.all()
+        	saved_post = user_profile.bookmarked.all()
+        	context = {
+        	    'post': post,
+	            'saved_post': saved_post,
+	            'liked_post': liked_post
+	            
+	        }
+        	return render(request, 'like_count.html', context)
+    return HttpResponse("Invalid request")

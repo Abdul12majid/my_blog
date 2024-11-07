@@ -3,3 +3,9 @@
 {% else %}
 <i hx-post="{% url 'like_count2' post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-heart-o" style="color:darkgrey;"></i><b>{{ count }}</b>
 {% endif %}
+
+{% if post in saved_post %}
+&nbsp; &nbsp; <i hx-post="{% url 'bookmark' post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-bookmark" style="color:grey;"></i>
+{% else %}
+&nbsp; &nbsp; <i hx-post="{% url 'bookmark' post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-bookmark-o" style="color:grey;"></i>
+{% endif %}

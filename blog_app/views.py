@@ -89,10 +89,12 @@ def post_detail(request, slug):
     similar_post = Post.objects.filter(categories=post_category).all().exclude(id=post.id)
     user_profile = request.user.profile
     liked_post = user_profile.liked_post.all()
+    saved_post = user_profile.bookmarked.all()
     context = {
     	'post': post,
     	'user_profile': user_profile,
     	"liked_post": liked_post,
+    	"saved_post": saved_post,
     	'similar_post':similar_post,
     }
     return render(request, 'pages/post_detail.html', context)
