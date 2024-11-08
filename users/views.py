@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from blog_app.models import Post
 
 # Create your views here.
 
@@ -78,11 +79,21 @@ def profile(request, username):
 
 
 def my_blogs(request):
-	return render(request, 'my_blogs.html')
+	user = request.user
+	posts = Post.objects.filter(author=user).all
+	context = {
+		'posts':posts,
+	}
+	return render(request, 'my_blogs.html', context)
 
 
 def saved_blogs(request):
-	return render(request, 'saved_blogs.html')
+	user_profile = request.user.profile
+	posts = user_profile.bookmarked.all()
+	context = {
+		'posts':posts,
+	}
+	return render(request, 'saved_blogs.html', context)
 
 
 def following(request):
