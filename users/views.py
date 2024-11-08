@@ -91,3 +91,7 @@ def following(request):
 
 def followers(request):
 	return render(request, 'followers.html')
+
+def test_base(request):
+	return render(request, 'test_base.html')
+

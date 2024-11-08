@@ -10,6 +10,7 @@ urlpatterns = [
     path('saved_blogs', views.saved_blogs, name="saved_blogs"),
     path('following', views.following, name="following"),
     path('followers', views.followers, name="followers"),
+    path('test_base', views.test_base, name="test_base"),
 
     
     
