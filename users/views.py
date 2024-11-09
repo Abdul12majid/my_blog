@@ -78,26 +78,37 @@ def profile(request, username):
 	return render(request, 'profile.html', context)
 
 
-def my_blogs(request):
-	user = request.user
+def my_blogs(request, username):
+	user = User.objects.get(username=username)
+	user_profile = user.profile
 	posts = Post.objects.filter(author=user).all
 	context = {
 		'posts':posts,
+		'user':user,
 	}
 	return render(request, 'my_blogs.html', context)
 
 
-def saved_blogs(request):
-	user_profile = request.user.profile
+def saved_blogs(request, username):
+	user = User.objects.get(username=username)
+	user_profile = user.profile
 	posts = user_profile.bookmarked.all()
 	context = {
 		'posts':posts,
+		'user':user,
 	}
 	return render(request, 'saved_blogs.html', context)
 
 
-def following(request):
-	return render(request, 'following.html')
+def following(request, username):
+	user = User.objects.get(username=username)
+	user_profile = user.profile
+	follows = user_profile.follows.all()
+	context = {
+		'follows':follows,
+		'user':user,
+	}
+	return render(request, 'following.html', context)
 
 
 def followers(request):

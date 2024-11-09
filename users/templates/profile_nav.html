@@ -8,19 +8,19 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'my_blogs' %}">
+            <a class="nav-link" href="{% url 'my_blogs' user.username %}">
               <span data-feather="file"></span>
               Blogs
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'saved_blogs' %}">
+            <a class="nav-link" href="{% url 'saved_blogs' user.username %}">
               <span data-feather="book"></span>
               Saved Blogs
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'following' %}">
+            <a class="nav-link" href="{% url 'following' user.username %}">
               <span data-feather="users"></span>
               Following
             </a>
