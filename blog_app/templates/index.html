@@ -66,6 +66,12 @@
             {% else %}
                 <i hx-post="{% url 'like_count2' most_liked_post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-heart-o" style="color:darkgrey;"></i><b>{{ most_liked_post.likes }}</b>
             {% endif %}
+
+            {% if most_liked_post in saved_post %}
+              &nbsp; &nbsp; <i hx-post="{% url 'bookmark' most_liked_post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-bookmark" style="color:grey;"></i>&nbsp;<b>{{ most_liked_post.bookmarks }}</b>
+              {% else %}
+              &nbsp; &nbsp; <i hx-post="{% url 'bookmark' most_liked_post.id %}" hx-target="#like_id" hx-swap="innerhtml" class="fa fa-bookmark-o" style="color:grey;"></i>&nbsp;<b>{{ most_liked_post.bookmarks }}</b>
+            {% endif %}
             </div>
 
         {% else %}

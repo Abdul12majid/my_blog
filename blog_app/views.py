@@ -12,6 +12,8 @@ health_category = Category.objects.get(id=5)
 
 def index(request):
 	if request.user.is_authenticated:
+		user_profile = request.user.profile
+		saved_post = user_profile.bookmarked.all()
 		most_liked_post = Post.objects.order_by('-likes').first()
 		user_profile = request.user.profile
 		liked_post = user_profile.liked_post.all()
@@ -27,6 +29,7 @@ def index(request):
 			'second_most_liked_post':second_most_liked_post,
 			'third_most_liked_post':third_most_liked_post,
 			'liked_post':liked_post,
+			'saved_post':saved_post,
 		}
 		return render(request, 'index.html', context)
 
