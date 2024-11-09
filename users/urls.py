@@ -9,7 +9,7 @@ urlpatterns = [
     path('my_blogs/<str:username>/', views.my_blogs, name="my_blogs"),
     path('saved_blogs/<str:username>/', views.saved_blogs, name="saved_blogs"),
     path('following/<str:username>/', views.following, name="following"),
-    path('followers', views.followers, name="followers"),
+    path('followers/<str:username>/', views.followers, name="followers"),
     path('test_base', views.test_base, name="test_base"),
 
     

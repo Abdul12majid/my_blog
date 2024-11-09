@@ -111,8 +111,15 @@ def following(request, username):
 	return render(request, 'following.html', context)
 
 
-def followers(request):
-	return render(request, 'followers.html')
+def followers(request, username):
+	user = User.objects.get(username=username)
+	user_profile = user.profile
+	followers = user_profile.followed_by.all()
+	context = {
+		'followers':followers,
+		'user':user,
+	}
+	return render(request, 'followers.html', context)
 
 def test_base(request):
 	return render(request, 'test_base.html')
