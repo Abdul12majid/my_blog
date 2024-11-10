@@ -3,7 +3,7 @@
 
 {% block title %}
 
-{{ user.username }}
+{{ username}}
 {% endblock %}
 
 
@@ -16,10 +16,7 @@
 {% block f_status %}
 
   {% if get_user == user %}
-    <button type="button" class="btn btn-sm btn-outline-secondary">
-      <span data-feather="calendar"></span>
-      Edit Profile
-    </button>
+    {% include 'edit_profile.html' %}
   {% else %}
 
     <div class="container" id="follow_un">
@@ -41,8 +38,9 @@
 {% endblock %}
 
 
-
 {% block content %}
+
+{% include 'profile_messages.html' %}
 
 <h1>JJJJJJJJJJJJj</h1>
 

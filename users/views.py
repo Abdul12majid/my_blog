@@ -124,3 +124,21 @@ def followers(request, username):
 def test_base(request):
 	return render(request, 'test_base.html')
 
+
+
+def change_details(request):
+	if request.method == "POST":
+		user = request.user
+		first_name = request.POST['first_name']
+		last_name = request.POST['last_name']
+		email = request.POST['email']
+		username = request.POST['username']
+		user.first_name = first_name
+		user.last_name = last_name
+		user.email = email
+		user.username = username
+		user.save()
+		print("changes made")
+		messages.success(request, ("Info Updated."))
+		return redirect(f"profile/{user.username}")
+	return HttpResponse("invalid request")
